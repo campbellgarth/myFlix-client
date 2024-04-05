@@ -3,13 +3,11 @@ import { createRoot } from 'react-dom/client';
 //import statement to show that you need to bundle './index.scss'
 import "./index.scss";
 
+import { MainView } from "./components/main-view/main-view";
+
 //main component
 const MyFlixApplication = () => {
-    return (
-        <div className="my-flix">
-            <div>Good morning</div>
-        </div>
-    );
+    return <MainView />;
 };
 //finds the root of the app
 const container = document.querySelector("#root");
