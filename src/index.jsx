@@ -1,3 +1,5 @@
+//start parcel with parcel src/index.html
+
 import { createRoot } from 'react-dom/client';
 
 //import statement to show that you need to bundle './index.scss'
