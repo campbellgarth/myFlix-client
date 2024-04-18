@@ -6,10 +6,15 @@ import { createRoot } from 'react-dom/client';
 import "./index.scss";
 
 import { MainView } from "./components/main-view/main-view";
+import Container from "react-bootstrap/Container";
 
 //main component
 const MyFlixApplication = () => {
-    return <MainView />;
+    return (
+        <Container>
+            <MainView />
+        </Container>
+    );
 };
 //finds the root of the app
 const container = document.querySelector("#root");
