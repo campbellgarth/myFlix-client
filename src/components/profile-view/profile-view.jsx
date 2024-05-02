@@ -27,9 +27,9 @@ export const ProfileView = () => {
           {user && (
             <div>
               <h2>User Profile</h2>
-              <p>Username: {user.username}</p>
-              <p>Email: {user.email}</p>
-              <p>Date of Birth: {user.dateOfBirth}</p>
+              <p>Username: {user.Username}</p>
+              <p>Email: {user.Email}</p>
+              <p>Date of Birth: {user.Birthday}</p>
               <button>Edit Profile</button>
               <button>Deregister</button>
             </div>

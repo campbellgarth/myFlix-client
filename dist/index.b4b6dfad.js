@@ -41920,7 +41920,7 @@ const ProfileView = ()=>{
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                     children: [
                         "Username: ",
-                        user.username
+                        user.Username
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
@@ -41930,7 +41930,7 @@ const ProfileView = ()=>{
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                     children: [
                         "Email: ",
-                        user.email
+                        user.Email
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
@@ -41940,7 +41940,7 @@ const ProfileView = ()=>{
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                     children: [
                         "Date of Birth: ",
-                        user.dateOfBirth
+                        user.Birthday
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
