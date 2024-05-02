@@ -41891,9 +41891,14 @@ var _s = $RefreshSig$();
 const ProfileView = ()=>{
     _s();
     const [user, setUser] = (0, _react.useState)(null);
+    const [token, setToken] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         const currentUser = JSON.parse(localStorage.getItem("user"));
-        fetch("/users").then((response)=>response.json()).then((users)=>{
+        fetch("https://myflixmovies-72c1f6d2bace.herokuapp.com/users", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>response.json()).then((users)=>{
             const foundUser = users.find((u)=>u._id === currentUser._id);
             setUser(foundUser);
         }).catch((error)=>console.error("Error fetching user data:", error));
@@ -41905,7 +41910,7 @@ const ProfileView = ()=>{
                     children: "User Profile"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 25,
+                    lineNumber: 28,
                     columnNumber: 15
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -41915,7 +41920,7 @@ const ProfileView = ()=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 26,
+                    lineNumber: 29,
                     columnNumber: 15
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -41925,7 +41930,7 @@ const ProfileView = ()=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 27,
+                    lineNumber: 30,
                     columnNumber: 15
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -41935,36 +41940,36 @@ const ProfileView = ()=>{
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 28,
+                    lineNumber: 31,
                     columnNumber: 15
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                     children: "Edit Profile"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 29,
+                    lineNumber: 32,
                     columnNumber: 15
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                     children: "Deregister"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 30,
+                    lineNumber: 33,
                     columnNumber: 15
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/components/profile-view/profile-view.jsx",
-            lineNumber: 24,
+            lineNumber: 27,
             columnNumber: 13
         }, undefined)
     }, void 0, false, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 22,
+        lineNumber: 25,
         columnNumber: 9
     }, undefined);
 };
-_s(ProfileView, "5s2qRsV95gTJBmaaTh11GoxYeGE=");
+_s(ProfileView, "cANLe8RtnwDE5y1hInrXoZDdgy8=");
 _c = ProfileView;
 var _c;
 $RefreshReg$(_c, "ProfileView");

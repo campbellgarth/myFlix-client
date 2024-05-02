@@ -6,10 +6,13 @@ import UpdateUser from './update-user';
 
 export const ProfileView = () => {
     const [user, setUser] = useState(null);
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
         const currentUser = JSON.parse(localStorage.getItem('user'));
-        fetch('/users')
+        fetch("https://myflixmovies-72c1f6d2bace.herokuapp.com/users", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
             .then(response => response.json())
             .then(users => {
                 const foundUser = users.find(u => u._id === currentUser._id);
