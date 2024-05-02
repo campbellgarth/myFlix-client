@@ -6,7 +6,8 @@ import UpdateUser from './update-user';
 
 export const ProfileView = () => {
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(null);
+    const storedToken = localStorage.getItem("token");
+    const [token, setToken] = useState(storedToken ? storedToken : null);
 
     useEffect(() => {
         const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -20,7 +21,7 @@ export const ProfileView = () => {
             })
             .catch(error => console.error('Error fetching user data:', error));
 
-    }, []);
+    }, [token, user]);
     return (
         <div>
           {user && (
