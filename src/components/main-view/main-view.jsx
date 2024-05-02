@@ -5,9 +5,11 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
+import {UpdateUser} from "../profile-view/update-user";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 
 export const MainView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -15,6 +17,28 @@ export const MainView = () => {
     const [user, setUser] = useState(storedUser ? storedUser : null);
     const [token, setToken] = useState(storedToken ? storedToken : null);
     const [movies, setMovies] = useState([]);
+
+    const handleUpdate = (e) => {
+        const { name, value } = e.target;
+        setUser({ ...user, [name]: value });
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        fetch(`https://myflixmovies-72c1f6d2bace.herokuapp.com/users/${user._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then(updatedUser => {
+            setUser(updatedUser);
+            alert('User information updated successfully!');
+        })
+        .catch(error => console.error('Error updating user information:', error));
+    };
 
 
     useEffect(() => {
@@ -101,6 +125,22 @@ export const MainView = () => {
                             </>
                         }
                     />
+                    <Route
+                        path="/users/:Username"
+                        element={
+                            <>
+                                {!user ? (
+                                    <Navigate to="/login" replace />
+                                ) : (
+                                    <Col md={8}>
+                                        <UpdateUser Username={user.Username} handleSubmit={handleSubmit} handleUpdate={handleUpdate} />
+                                    </Col>
+                                )}
+
+                            </>
+                        }
+                    />
+                    
                     <Route
                         path="/movies/:movieId"
                         element={

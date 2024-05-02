@@ -1,7 +1,8 @@
 import React from 'react';
 
-function UpdateUser({ handleSubmit, handleUpdate}) {
+export function UpdateUser({ user, handleSubmit, handleUpdate}) {
     return (
+        user&&( 
         <form className='profile-form' onSubmit={(e) => handleSubmit(e)}>
             <h2>Want to change some info?</h2>
             <label>Username:</label>
@@ -26,7 +27,8 @@ function UpdateUser({ handleSubmit, handleUpdate}) {
                 Update
             </button>
         </form>
-    )
+        )
+        )
 }
 
 export default UpdateUser;
