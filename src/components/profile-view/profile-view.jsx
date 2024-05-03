@@ -22,13 +22,35 @@ export const ProfileView = () => {
             .catch(error => console.error('Error fetching user data:', error));
 
     }, [token, user]);
+    // const handleUpdate = (e) => {
+    //     const { name, value } = e.target;
+    //     setUser({ ...user, [name]: value });
+    // };
     const handleUpdate = (e) => {
-        const { name, value } = e.target;
-        setUser({ ...user, [name]: value });
+        // Check if e or e.target is undefined before destructuring
+        if (!e || !e.target) {
+            console.error('Event or event target is undefined');
+            return;
+        }
+    
+        // Destructure name and value from e.target
+        const { name, value } = e.target || {};
+    
+        // Check if name or value is undefined before updating state
+        if (!name || value === undefined) {
+            console.error('Name or value is undefined');
+            return;
+        }
+    
+        // Update user state
+        if (name) {
+            setUser({ ...user, [name]: value });
+        }
     };
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`https://myflixmovies-72c1f6d2bace.herokuapp.com/users/${user._id}`, {
+        fetch(`https://myflixmovies-72c1f6d2bace.herokuapp.com/users/${user.Username}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -39,6 +61,7 @@ export const ProfileView = () => {
         .then(response => response.json())
         .then(updatedUser => {
             setUser(updatedUser);
+            localStorage.setItem('user', JSON.stringify(updatedUser));
             alert('User information updated successfully!');
         })
         .catch(error => console.error('Error updating user information:', error));
@@ -55,26 +78,26 @@ export const ProfileView = () => {
                     <UserInfo Username={user.Username} Email={user.Email} Birthday={user.Birthday} />
                      {/* <FavoriteMovies favoriteMovieList={favoriteMovieList} />  */}
                      <UpdateUser Username={user.Username} handleSubmit={handleSubmit} handleUpdate={handleUpdate} />
-                     <form className='profile-form' onSubmit={(e) => handleSubmit(e)}>
+                     <form className='profile-form' onSubmit={handleSubmit}>
             <h2>Want to change some info?</h2>
             <label>Username:</label>
             <input
                 type='text'
                 name='Username'
                 defaultValue={user.Username}
-                onChange={e => handleUpdate(e)} />
+                onChange={(e) => handleUpdate(e)} />
             <label>Password</label>
             <input
                 type='password'
                 name='password'
                 defaultValue={user.Password}
-                onChange={e => handleUpdate(e)} />
+                onChange={(e) => handleUpdate(e)} />
             <label>Email Address</label>
             <input
                 type='email'
-                name='email'
+                name='Email'
                 defaultValue={user.Email}
-                onChange={e => handleUpdate(e.target.value)} />
+                onChange={(e) => handleUpdate(e)} />
             <button variant='primary' type='submit'>
                 Update
             </button>
