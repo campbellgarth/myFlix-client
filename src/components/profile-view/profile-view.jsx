@@ -6,6 +6,11 @@ import UpdateUser from './update-user';
 
 export const ProfileView = () => {
     const [user, setUser] = useState(null);
+    const [formData, setFormData] = useState({
+        Username: '',
+        Password: '',
+        Email: ''
+    });
     const storedToken = localStorage.getItem("token");
     const [token, setToken] = useState(storedToken ? storedToken : null);
 
@@ -17,92 +22,84 @@ export const ProfileView = () => {
             .then(response => response.json())
             .then(users => {
                 const foundUser = users.find(u => u._id === currentUser._id);
-                setUser(foundUser)
+                const updatedFormData = {
+                    ...formData,
+                    Username: foundUser.Username,
+                    Email: foundUser.Email,
+                    // We do not add password because we don't want the hashed value to be included in the form
+                };
+                setUser(foundUser);
+                setFormData(updatedFormData);
             })
             .catch(error => console.error('Error fetching user data:', error));
+    }, [token]);
 
-    }, [token, user]);
-    // const handleUpdate = (e) => {
-    //     const { name, value } = e.target;
-    //     setUser({ ...user, [name]: value });
-    // };
     const handleUpdate = (e) => {
-        // Check if e or e.target is undefined before destructuring
-        if (!e || !e.target) {
-            console.error('Event or event target is undefined');
-            return;
-        }
-    
-        // Destructure name and value from e.target
-        const { name, value } = e.target || {};
-    
-        // Check if name or value is undefined before updating state
-        if (!name || value === undefined) {
-            console.error('Name or value is undefined');
-            return;
-        }
-    
-        // Update user state
-        if (name) {
-            setUser({ ...user, [name]: value });
-        }
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        // Exclude the password from the user object when spreading it into updatedFormData
+        const { Password, ...userWithoutPassword } = user;
+        // Merge the existing formData state with additional user data
+        const updatedFormData = {
+            ...userWithoutPassword,
+            ...formData,
+        };
+
         fetch(`https://myflixmovies-72c1f6d2bace.herokuapp.com/users/${user.Username}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(updatedFormData)
         })
-        .then(response => response.json())
-        .then(updatedUser => {
-            setUser(updatedUser);
-            localStorage.setItem('user', JSON.stringify(updatedUser));
-            alert('User information updated successfully!');
-        })
-        .catch(error => console.error('Error updating user information:', error));
+            .then(response => response.json())
+            .then(updatedUser => {
+                setUser(updatedUser);
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+                alert('User information updated successfully!');
+            })
+            .catch(error => console.error('Error updating user information:', error));
     };
 
-   
-
-    
     return (
         <div>
             {user && (
                 <div>
                     <h2>User Profile</h2>
                     <UserInfo Username={user.Username} Email={user.Email} Birthday={user.Birthday} />
-                     {/* <FavoriteMovies favoriteMovieList={favoriteMovieList} />  */}
-                     <UpdateUser Username={user.Username} handleSubmit={handleSubmit} handleUpdate={handleUpdate} />
-                     <form className='profile-form' onSubmit={handleSubmit}>
-            <h2>Want to change some info?</h2>
-            <label>Username:</label>
-            <input
-                type='text'
-                name='Username'
-                defaultValue={user.Username}
-                onChange={(e) => handleUpdate(e)} />
-            <label>Password</label>
-            <input
-                type='password'
-                name='password'
-                defaultValue={user.Password}
-                onChange={(e) => handleUpdate(e)} />
-            <label>Email Address</label>
-            <input
-                type='email'
-                name='Email'
-                defaultValue={user.Email}
-                onChange={(e) => handleUpdate(e)} />
-            <button variant='primary' type='submit'>
-                Update
-            </button>
-        </form>
-                    
+                    <form className='profile-form' onSubmit={handleSubmit}>
+                        <h2>Want to change some info?</h2>
+                        <label>Username:</label>
+                        <input
+                            type='text'
+                            name='Username'
+                            value={formData.Username}
+                            onChange={(e) => handleUpdate(e)} />
+                        <label>Password</label>
+                        <input
+                            type='password'
+                            name='Password'
+                            // defaultValue={user.Password}
+                            onChange={(e) => handleUpdate(e)} />
+                        <label>Email Address</label>
+                        <input
+                            type='email'
+                            name='Email'
+                            value={formData.Email}
+                            onChange={(e) => handleUpdate(e)} />
+                        <button variant='primary' type='submit'>
+                            Update
+                        </button>
+                    </form>
+
                     <Link to={`/users/${user.Username}`}>
                         <button>Edit Profile</button>
                     </Link>
@@ -112,6 +109,7 @@ export const ProfileView = () => {
         </div>
     );
 };
+
 
 
 

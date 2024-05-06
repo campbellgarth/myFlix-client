@@ -41945,6 +41945,11 @@ var _s = $RefreshSig$();
 const ProfileView = ()=>{
     _s();
     const [user, setUser] = (0, _react.useState)(null);
+    const [formData, setFormData] = (0, _react.useState)({
+        Username: "",
+        Password: "",
+        Email: ""
+    });
     const storedToken = localStorage.getItem("token");
     const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     (0, _react.useEffect)(()=>{
@@ -41955,44 +41960,40 @@ const ProfileView = ()=>{
             }
         }).then((response)=>response.json()).then((users)=>{
             const foundUser = users.find((u)=>u._id === currentUser._id);
+            const updatedFormData = {
+                ...formData,
+                Username: foundUser.Username,
+                Email: foundUser.Email
+            };
             setUser(foundUser);
+            setFormData(updatedFormData);
         }).catch((error)=>console.error("Error fetching user data:", error));
     }, [
-        token,
-        user
+        token
     ]);
-    // const handleUpdate = (e) => {
-    //     const { name, value } = e.target;
-    //     setUser({ ...user, [name]: value });
-    // };
     const handleUpdate = (e)=>{
-        // Check if e or e.target is undefined before destructuring
-        if (!e || !e.target) {
-            console.error("Event or event target is undefined");
-            return;
-        }
-        // Destructure name and value from e.target
-        const { name, value } = e.target || {};
-        // Check if name or value is undefined before updating state
-        if (!name || value === undefined) {
-            console.error("Name or value is undefined");
-            return;
-        }
-        // Update user state
-        if (name) setUser({
-            ...user,
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
             [name]: value
         });
     };
     const handleSubmit = (e)=>{
         e.preventDefault();
+        // Exclude the password from the user object when spreading it into updatedFormData
+        const { Password, ...userWithoutPassword } = user;
+        // Merge the existing formData state with additional user data
+        const updatedFormData = {
+            ...userWithoutPassword,
+            ...formData
+        };
         fetch(`https://myflixmovies-72c1f6d2bace.herokuapp.com/users/${user.Username}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(updatedFormData)
         }).then((response)=>response.json()).then((updatedUser)=>{
             setUser(updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -42006,7 +42007,7 @@ const ProfileView = ()=>{
                     children: "User Profile"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 77,
+                    lineNumber: 76,
                     columnNumber: 21
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _userInfoDefault.default), {
@@ -42015,17 +42016,8 @@ const ProfileView = ()=>{
                     Birthday: user.Birthday
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 78,
+                    lineNumber: 77,
                     columnNumber: 21
-                }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _updateUserDefault.default), {
-                    Username: user.Username,
-                    handleSubmit: handleSubmit,
-                    handleUpdate: handleUpdate
-                }, void 0, false, {
-                    fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 80,
-                    columnNumber: 22
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
                     className: "profile-form",
@@ -42035,59 +42027,59 @@ const ProfileView = ()=>{
                             children: "Want to change some info?"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 82,
-                            columnNumber: 13
+                            lineNumber: 79,
+                            columnNumber: 25
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
                             children: "Username:"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 83,
-                            columnNumber: 13
+                            lineNumber: 80,
+                            columnNumber: 25
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                             type: "text",
                             name: "Username",
-                            defaultValue: user.Username,
+                            value: formData.Username,
                             onChange: (e)=>handleUpdate(e)
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 84,
-                            columnNumber: 13
+                            lineNumber: 81,
+                            columnNumber: 25
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
                             children: "Password"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 89,
-                            columnNumber: 13
+                            lineNumber: 86,
+                            columnNumber: 25
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                             type: "password",
-                            name: "password",
-                            defaultValue: user.Password,
+                            name: "Password",
+                            // defaultValue={user.Password}
                             onChange: (e)=>handleUpdate(e)
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 90,
-                            columnNumber: 13
+                            lineNumber: 87,
+                            columnNumber: 25
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
                             children: "Email Address"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 95,
-                            columnNumber: 13
+                            lineNumber: 92,
+                            columnNumber: 25
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                             type: "email",
                             name: "Email",
-                            defaultValue: user.Email,
+                            value: formData.Email,
                             onChange: (e)=>handleUpdate(e)
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 96,
-                            columnNumber: 13
+                            lineNumber: 93,
+                            columnNumber: 25
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                             variant: "primary",
@@ -42095,14 +42087,14 @@ const ProfileView = ()=>{
                             children: "Update"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 101,
-                            columnNumber: 13
+                            lineNumber: 98,
+                            columnNumber: 25
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 81,
-                    columnNumber: 22
+                    lineNumber: 78,
+                    columnNumber: 21
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                     to: `/users/${user.Username}`,
@@ -42110,34 +42102,34 @@ const ProfileView = ()=>{
                         children: "Edit Profile"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 107,
+                        lineNumber: 104,
                         columnNumber: 25
                     }, undefined)
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 106,
+                    lineNumber: 103,
                     columnNumber: 21
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                     children: "Deregister"
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 109,
+                    lineNumber: 106,
                     columnNumber: 21
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/components/profile-view/profile-view.jsx",
-            lineNumber: 76,
+            lineNumber: 75,
             columnNumber: 17
         }, undefined)
     }, void 0, false, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 74,
+        lineNumber: 73,
         columnNumber: 9
     }, undefined);
 };
-_s(ProfileView, "b9qwa2nTchI7CXdLLhOimcmzSDc=");
+_s(ProfileView, "htZMWeywyHv7gH+HO1b11EVZ1BE=");
 _c = ProfileView;
 var _c;
 $RefreshReg$(_c, "ProfileView");
