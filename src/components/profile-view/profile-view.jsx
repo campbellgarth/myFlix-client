@@ -114,6 +114,35 @@ export const ProfileView = () => {
       );
   };
 
+  const handleDeregister = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token');
+    fetch(
+      `https://myflixmovies-72c1f6d2bace.herokuapp.com/users/${user.Username}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          // Remove user from localStorage
+          alert("Account deleted successfully.")
+          localStorage.clear();
+          window.location.reload();
+          
+          console.log(`${user.Username} was deleted.`);
+        } else {
+          throw new Error('Failed to deregister user');
+        }
+      })
+      .catch((error) => {
+        console.error('Error deregistering user:', error);
+      });
+  };
+
   return (
     <div>
       {user && (
@@ -152,10 +181,9 @@ export const ProfileView = () => {
             </button>
           </form>
 
-          <Link to={`/users/${user.Username}`}>
+          {/* <Link to={`/users/${user.Username}`}>
             <button>Edit Profile</button>
-          </Link>
-          <button>Deregister</button>
+          </Link> */}
 
           {favMovies && (
             <div>
@@ -167,6 +195,7 @@ export const ProfileView = () => {
           )}
         </div>
       )}
+      <button onClick={handleDeregister}>Deregister</button>
     </div>
   );
 };

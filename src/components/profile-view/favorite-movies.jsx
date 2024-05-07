@@ -35,7 +35,7 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
       {favoriteMovieList.map((movies) => {
         return (
           <div key={movies.id}>
-            <img src={movies.imgURL} />
+            <img src={movies.imgURL}  className="movie-image w-100" />
             <Link to={`/movies/${movies.id}`}>
               <h4>{movies.Title}</h4>
             </Link>

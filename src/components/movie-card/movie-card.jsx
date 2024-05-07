@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const MovieCard = ({ movie }) => {
   console.log(movie);
-  
+
   const handleAddToFav = (movieId) => {
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
@@ -29,11 +29,13 @@ export const MovieCard = ({ movie }) => {
   };
 
   return (
-    <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+    
       <Card className="h-100">
         <Card.Img variant="top" src={movie.imgURL} />
         <Card.Body>
+        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
           <Card.Title>{movie.Title}</Card.Title>
+          </Link>
           <Card.Text>{movie.Year}</Card.Text>
           <Button
             className="btn btn-primary"
@@ -43,7 +45,7 @@ export const MovieCard = ({ movie }) => {
           </Button>
         </Card.Body>
       </Card>
-    </Link>
+   
   );
 };
 
