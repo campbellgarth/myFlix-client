@@ -42448,15 +42448,20 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
                 lineNumber: 34,
                 columnNumber: 7
             }, this),
-            favoriteMovieList.map((movies)=>{
-                return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            favoriteMovieList.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                children: "No favorite movies saved yet!"
+            }, void 0, false, {
+                fileName: "src/components/profile-view/favorite-movies.jsx",
+                lineNumber: 36,
+                columnNumber: 9
+            }, this) : favoriteMovieList.map((movies)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
                             src: movies.imgURL,
                             className: "movie-image w-100"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/favorite-movies.jsx",
-                            lineNumber: 38,
+                            lineNumber: 40,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -42465,12 +42470,12 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
                                 children: movies.Title
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                lineNumber: 40,
+                                lineNumber: 42,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "src/components/profile-view/favorite-movies.jsx",
-                            lineNumber: 39,
+                            lineNumber: 41,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -42482,16 +42487,15 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
                             ]
                         }, void 0, true, {
                             fileName: "src/components/profile-view/favorite-movies.jsx",
-                            lineNumber: 42,
+                            lineNumber: 44,
                             columnNumber: 13
                         }, this)
                     ]
                 }, movies.id, true, {
                     fileName: "src/components/profile-view/favorite-movies.jsx",
-                    lineNumber: 37,
+                    lineNumber: 39,
                     columnNumber: 11
-                }, this);
-            })
+                }, this))
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/favorite-movies.jsx",

@@ -32,10 +32,12 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
   return (
     <div>
       <h2>Favorite Movies</h2>
-      {favoriteMovieList.map((movies) => {
-        return (
+      {favoriteMovieList.length === 0 ? (
+        <p>No favorite movies saved yet!</p>
+      ) : (
+        favoriteMovieList.map((movies) => (
           <div key={movies.id}>
-            <img src={movies.imgURL}  className="movie-image w-100" />
+            <img src={movies.imgURL} className="movie-image w-100" />
             <Link to={`/movies/${movies.id}`}>
               <h4>{movies.Title}</h4>
             </Link>
@@ -47,8 +49,8 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
               Remove from list
             </button>
           </div>
-        );
-      })}
+        ))
+      )}
     </div>
   );
 }
