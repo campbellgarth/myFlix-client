@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import UserInfo from './user-info';
 import FavoriteMovies from './favorite-movies';
-import UpdateUser from './update-user';
+import { Row, Col, Container, Card, Form, Button } from 'react-bootstrap';
 
 export const ProfileView = () => {
   const [user, setUser] = useState(null);
@@ -129,10 +129,10 @@ export const ProfileView = () => {
       .then((response) => {
         if (response.ok) {
           // Remove user from localStorage
-          alert("Account deleted successfully.")
+          alert('Account deleted successfully.');
           localStorage.clear();
           window.location.reload();
-          
+
           console.log(`${user.Username} was deleted.`);
         } else {
           throw new Error('Failed to deregister user');
@@ -144,58 +144,90 @@ export const ProfileView = () => {
   };
 
   return (
-    <div>
+    <Container>
       {user && (
-        <div>
-          <h2>User Profile</h2>
-          <UserInfo
-            Username={user.Username}
-            Email={user.Email}
-            Birthday={user.Birthday}
-          />
-          <form className="profile-form" onSubmit={handleSubmit}>
-            <h2>Want to change some info?</h2>
-            <label>Username:</label>
-            <input
-              type="text"
-              name="Username"
-              value={formData.Username}
-              onChange={(e) => handleUpdate(e)}
-            />
-            <label>Password</label>
-            <input
-              type="password"
-              name="Password"
-              // defaultValue={user.Password}
-              onChange={(e) => handleUpdate(e)}
-            />
-            <label>Email Address</label>
-            <input
-              type="email"
-              name="Email"
-              value={formData.Email}
-              onChange={(e) => handleUpdate(e)}
-            />
-            <button variant="primary" type="submit">
-              Update
-            </button>
-          </form>
-
-          {/* <Link to={`/users/${user.Username}`}>
-            <button>Edit Profile</button>
-          </Link> */}
-
-          {favMovies && (
-            <div>
-              <FavoriteMovies
-                favoriteMovieList={favMovies}
-                updateFavMovies={updateFavMovies}
-              />
-            </div>
-          )}
-        </div>
+        <Row>
+          <Col xs={12} sm={4}>
+            <Card>
+              <Card.Body>
+                <UserInfo
+                  Username={user.Username}
+                  Email={user.Email}
+                  Birthday={user.Birthday}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xs={12} sm={8}>
+            <Card>
+              <Card.Body>
+                <form className="profile-form h-100" onSubmit={handleSubmit}>
+                  <h4>Want to change some info?</h4>
+                  <Form.Group controlId="formUsername">
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="Username"
+                      value={formData.Username}
+                      onChange={(e) => handleUpdate(e)}
+                      required
+                      minLength="5"
+                      placeholder="username must be at least 5 characters"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formPassword">
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      name="Password"
+                      onChange={(e) => handleUpdate(e)}
+                      required
+                      minLength="5"
+                      placeholder="password must be at least 5 characters"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formEmail">
+                    <Form.Label>Email Address:</Form.Label>
+                    <Form.Control
+                      type="email"
+                      name="Email"
+                      value={formData.Email}
+                      onChange={(e) => handleUpdate(e)}
+                      required
+                      placeholder="please enter your email address"
+                    />
+                  </Form.Group>
+                  <button
+                    className="back-button"
+                    style={{ cursor: 'pointer' }}
+                    variant="primary"
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                </form>
+              </Card.Body>
+            </Card>
+          </Col>
+         
+            {favMovies && (
+              <div>
+                <FavoriteMovies
+                  favoriteMovieList={favMovies}
+                  updateFavMovies={updateFavMovies}
+                />
+              </div>
+            )}
+         
+        </Row>
       )}
-      <button onClick={handleDeregister}>Deregister</button>
-    </div>
+      <button
+        className="back-button"
+        style={{ cursor: 'pointer' }}
+        onClick={handleDeregister}
+      >
+        Deregister
+      </button>
+    </Container>
   );
 };

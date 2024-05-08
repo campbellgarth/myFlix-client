@@ -13198,4 +13198,14 @@ textarea.form-control-lg {
   margin: 10px 0;
   padding: 4px 12px;
 }
+
+.movie-container {
+  flex-direction: column;
+  height: 100%;
+  display: flex;
+}
+
+.movie-container button {
+  margin-top: auto;
+}
 /*# sourceMappingURL=index.2212206d.css.map */
