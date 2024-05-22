@@ -41,7 +41,8 @@ export const MainView = () => {
   };
 
   useEffect(() => {
-    if (!token) return;
+    console.log(token, 'Token after login');
+    if (token) {
     fetch('https://myflixmovies-72c1f6d2bace.herokuapp.com/movies', {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -64,6 +65,7 @@ export const MainView = () => {
         });
         setMovies(moviesFromApi);
       });
+    }
   }, [token, user]);
 
   return (

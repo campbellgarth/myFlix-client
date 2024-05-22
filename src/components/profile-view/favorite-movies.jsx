@@ -69,7 +69,7 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
                     onClick={() => handleRemoveFromFav(movies.id)}
                   >
                     {' '}
-                    Remove from list
+                    Remove from Favorites
                   </button>
                 </Card.Body>
               </Card>
