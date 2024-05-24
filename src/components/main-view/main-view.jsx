@@ -43,30 +43,30 @@ export const MainView = () => {
   useEffect(() => {
     console.log(token, 'Token after login');
     if (token) {
-    fetch('https://myflixmovies-72c1f6d2bace.herokuapp.com/movies', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const moviesFromApi = data.map((movie) => {
-          return {
-            id: movie._id,
-            Title: movie.Title,
-            imgURL: movie.imgURL,
-            Description: movie.Description,
-            Genre: {
-              Name: movie.Genre.Name,
-            },
-            Director: {
-              Name: movie.Director.Name,
-            },
-            Year: movie.Year,
-          };
+      fetch('https://myflixmovies-72c1f6d2bace.herokuapp.com/movies', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const moviesFromApi = data.map((movie) => {
+            return {
+              id: movie._id,
+              Title: movie.Title,
+              imgURL: movie.imgURL,
+              Description: movie.Description,
+              Genre: {
+                Name: movie.Genre.Name,
+              },
+              Director: {
+                Name: movie.Director.Name,
+              },
+              Year: movie.Year,
+            };
+          });
+          setMovies(moviesFromApi);
         });
-        setMovies(moviesFromApi);
-      });
     }
-  }, [token, user]);
+  }, [token]);
 
   return (
     <BrowserRouter>
@@ -102,7 +102,12 @@ export const MainView = () => {
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
-                    <LoginView onLoggedIn={(user) => setUser(user)} />
+                    <LoginView
+                      onLoggedIn={(user, token) => {
+                        setUser(user);
+                        setToken(token);
+                      }}
+                    />
                   </Col>
                 )}
               </>
