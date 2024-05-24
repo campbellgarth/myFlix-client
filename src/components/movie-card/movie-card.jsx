@@ -66,11 +66,12 @@ export const MovieCard = ({ movie }) => {
   return (
     <Card className="h-100">
       <Card.Img variant="top" src={movie.imgURL} />
-      <Card.Body>
+      <Card.Body className="d-flex flex-column">
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
           <Card.Title>{movie.Title}</Card.Title>
         </Link>
         <Card.Text>{movie.Year}</Card.Text>
+        <div className="mt-auto">
         {isFavorite ? (
           <Button
             className="btn btn-warning"
@@ -86,6 +87,7 @@ export const MovieCard = ({ movie }) => {
             Add to Favorites
           </Button>
         )}
+        </div>
       </Card.Body>
     </Card>
   );
