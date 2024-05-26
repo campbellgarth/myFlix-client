@@ -103,3 +103,5 @@ MovieCard.propTypes = {
     id: PropTypes.string.isRequired
   }).isRequired,
 };
+
+export default MovieCard;

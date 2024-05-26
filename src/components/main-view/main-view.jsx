@@ -8,6 +8,7 @@ import { ProfileView } from '../profile-view/profile-view';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { SearchBar } from '../searchbar-view/searchbar-view'
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -122,6 +123,20 @@ export const MainView = () => {
                 ) : (
                   <Col md={8}>
                     <ProfileView />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <Col md={8}>
+                    <SearchBar token={token} />
                   </Col>
                 )}
               </>

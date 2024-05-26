@@ -1,7 +1,9 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+
 export const NavigationBar = ({ user, onLoggedOut }) => {
+  const token = localStorage.getItem('token');
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -33,6 +35,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
               </>
             )}
           </Nav>
+          <Nav.Link as={Link} to="/search">Search a Movie</Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>
