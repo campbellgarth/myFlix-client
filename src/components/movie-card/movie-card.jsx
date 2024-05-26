@@ -1,4 +1,3 @@
-
 import PropTypes from 'prop-types';
 import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -9,7 +8,8 @@ export const MovieCard = ({ movie }) => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.FavoriteMovies && user.FavoriteMovies.includes(movie.id)) { //if movie is in favorites list, should show "remove from favs" instead
+    console.log(user);
+    if (user && user.FavoriteMovies && user.FavoriteMovies.includes(movie.id)) {
       setIsFavorite(true);
     }
   }, [movie.id]);
@@ -55,6 +55,7 @@ export const MovieCard = ({ movie }) => {
       .then((response) => response.json())
       .then((updatedUser) => {
         console.log('RESULT', updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
         setIsFavorite(false);
         alert('Movie removed from your favorite list successfully!');
       })
@@ -72,21 +73,21 @@ export const MovieCard = ({ movie }) => {
         </Link>
         <Card.Text>{movie.Year}</Card.Text>
         <div className="mt-auto">
-        {isFavorite ? (
-          <Button
-            className="btn btn-warning"
-            onClick={() => handleRemoveFromFav(movie.id)}
-          >
-            Remove from Favorites
-          </Button>
-        ) : (
-          <Button
-            className="btn back-button"
-            onClick={() => handleAddToFav(movie.id)}
-          >
-            Add to Favorites
-          </Button>
-        )}
+          {isFavorite ? (
+            <Button
+              className="btn btn-warning"
+              onClick={() => handleRemoveFromFav(movie.id)}
+            >
+              Remove from Favorites
+            </Button>
+          ) : (
+            <Button
+              className="btn back-button"
+              onClick={() => handleAddToFav(movie.id)}
+            >
+              Add to Favorites
+            </Button>
+          )}
         </div>
       </Card.Body>
     </Card>
@@ -100,7 +101,7 @@ MovieCard.propTypes = {
     Director: PropTypes.object.isRequired,
     Year: PropTypes.number.isRequired,
     Genre: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
   }).isRequired,
 };
 

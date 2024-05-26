@@ -31,11 +31,11 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link as={Link} to="/profile">
                   Profile
                 </Nav.Link>
+                <Nav.Link as={Link} to="/search">Search</Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
               </>
             )}
           </Nav>
-          <Nav.Link as={Link} to="/search">Search a Movie</Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>
