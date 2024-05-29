@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col } from 'react-bootstrap';
-import MovieCard from '../movie-card/movie-card';
+import { MovieCard } from '../movie-card/movie-card';
 
 export const SearchBar = ({ token }) => {
   const [searchInput, setSearchInput] = useState('');
@@ -97,7 +97,7 @@ export const SearchBar = ({ token }) => {
       <div className="d-flex flex-wrap">
         {filteredMovies.map((movie) => (
           <Col className="mb-4 mt-4" key={movie.id} md={3}>
-            <MovieCard movie={movie} />
+             <MovieCard movie={movie} favoriteMovies={favoriteMovieList} updateFavMovies={updateFavMovies} />
           </Col>
         ))}
       </div>

@@ -42,7 +42,6 @@ export const MainView = () => {
   };
 
   useEffect(() => {
-    console.log(token, 'Token after login');
     if (token) {
       fetch('https://myflixmovies-72c1f6d2bace.herokuapp.com/movies', {
         headers: { Authorization: `Bearer ${token}` },
@@ -67,7 +66,7 @@ export const MainView = () => {
           setMovies(moviesFromApi);
         });
     }
-  }, [token]);
+  }, [token, user]);
 
   return (
     <BrowserRouter>
@@ -171,7 +170,7 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} />
+                        <MovieCard movie={movie} setUser={setUser} />
                       </Col>
                     ))}
                     <Col md={12}>

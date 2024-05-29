@@ -27541,17 +27541,50 @@ var _react = require("react");
 var _s = $RefreshSig$();
 const MovieCard = ({ movie })=>{
     _s();
-    const [isFavorite, setIsFavorite] = (0, _react.useState)(false);
+    const [favMovies, setFavMovies] = (0, _react.useState)([]);
+    const token = localStorage.getItem("token");
+    const updateFavMovies = (movieId)=>{
+        setFavMovies(favMovies.filter((m)=>m.id !== movieId));
+    };
+    const fetchFavMovies = ()=>{
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        fetch("https://myflixmovies-72c1f6d2bace.herokuapp.com/movies", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>response.json()).then((data)=>{
+            const moviesFromApi = data.map((movie)=>{
+                return {
+                    id: movie._id,
+                    Title: movie.Title,
+                    imgURL: movie.imgURL,
+                    Description: movie.Description,
+                    Genre: {
+                        Name: movie.Genre.Name
+                    },
+                    Director: {
+                        Name: movie.Director.Name
+                    },
+                    Year: movie.Year
+                };
+            });
+            setFavMovies(moviesFromApi.filter((m)=>currentUser.FavoriteMovie.includes(m.id)));
+        });
+    };
     (0, _react.useEffect)(()=>{
         const user = JSON.parse(localStorage.getItem("user"));
         console.log(user);
-        if (user && user.FavoriteMovies && user.FavoriteMovies.includes(movie.id)) setIsFavorite(true);
+        fetchFavMovies();
     }, [
         movie.id
     ]);
+    (0, _react.useEffect)(()=>{
+        console.log("FAV MOVIES UPDATED", favMovies);
+    }, [
+        favMovies
+    ]);
     const handleAddToFav = (movieId)=>{
         const user = JSON.parse(localStorage.getItem("user"));
-        const token = localStorage.getItem("token");
         fetch(`https://myflixmovies-72c1f6d2bace.herokuapp.com/users/${user.Username}/movie/${movieId}`, {
             method: "POST",
             headers: {
@@ -27561,7 +27594,10 @@ const MovieCard = ({ movie })=>{
         }).then((response)=>response.json()).then((updatedUser)=>{
             console.log("RESULT", updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
-            setIsFavorite(true);
+            setFavMovies([
+                ...favMovies,
+                movie
+            ]);
             alert("Movie added to your favorite list successfully!");
         }).catch((error)=>console.error("Error adding favorite movies:", error));
     };
@@ -27576,10 +27612,11 @@ const MovieCard = ({ movie })=>{
             }
         }).then((response)=>response.json()).then((updatedUser)=>{
             console.log("RESULT", updatedUser);
-            localStorage.setItem("user", JSON.stringify(updatedUser));
-            setIsFavorite(false);
+            // TODO: Update your API so that it return a user object
+            //localStorage.setItem('user', JSON.stringify(updatedUser));
+            updateFavMovies(movieId);
             alert("Movie removed from your favorite list successfully!");
-        }).catch((error)=>console.error("Error removing favorite movies:", error));
+        }).catch((error)=>console.error("Error removed from favorite movies:", error));
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
         className: "h-100",
@@ -27589,7 +27626,7 @@ const MovieCard = ({ movie })=>{
                 src: movie.imgURL
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 69,
+                lineNumber: 103,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
@@ -27601,30 +27638,30 @@ const MovieCard = ({ movie })=>{
                             children: movie.Title
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 72,
+                            lineNumber: 106,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 71,
+                        lineNumber: 105,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
                         children: movie.Year
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 74,
+                        lineNumber: 108,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         className: "mt-auto",
-                        children: isFavorite ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                        children: favMovies.some((favMovie)=>favMovie.id === movie.id) ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                             className: "btn btn-warning",
                             onClick: ()=>handleRemoveFromFav(movie.id),
                             children: "Remove from Favorites"
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 77,
+                            lineNumber: 111,
                             columnNumber: 13
                         }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                             className: "btn back-button",
@@ -27632,28 +27669,28 @@ const MovieCard = ({ movie })=>{
                             children: "Add to Favorites"
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 84,
+                            lineNumber: 118,
                             columnNumber: 13
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 75,
+                        lineNumber: 109,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 70,
+                lineNumber: 104,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 68,
+        lineNumber: 102,
         columnNumber: 5
     }, undefined);
 };
-_s(MovieCard, "lh6fxD9+vLbuebOO0x4Y5WwBqk4=");
+_s(MovieCard, "xsXABqGkNmFRsLvyCDlDCQ+LgRM=");
 _c = MovieCard;
 MovieCard.propTypes = {
     movie: (0, _propTypesDefault.default).shape({
@@ -42621,12 +42658,12 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
                         lg: 4,
                         className: "movie-container",
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
-                            className: "h-100",
+                            className: "h-100 w-100",
                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
                                 children: [
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
                                         src: movies.imgURL,
-                                        className: "movie-image movie-container w-100"
+                                        className: "movie-image movie-container h-100 w-100"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/favorite-movies.jsx",
                                         lineNumber: 55,
@@ -42656,7 +42693,7 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                                        className: "back-button movie-container",
+                                        className: "btn btn-warning movie-container",
                                         style: {
                                             cursor: "pointer"
                                         },
