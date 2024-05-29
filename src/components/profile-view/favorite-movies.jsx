@@ -17,7 +17,7 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
         ) : (
           favoriteMovieList.map((movie) => (
             <Col xs={12} sm={6} lg={4} key={movie.id} className="movie-container">
-              <MovieCard movie={movie} favoriteMovies={favoriteMovieList} updateFavMovies={updateFavMovies} />
+              <MovieCard movie={movie} />
             </Col>
           ))
         )}

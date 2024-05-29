@@ -97,7 +97,7 @@ export const SearchBar = ({ token }) => {
       <div className="d-flex flex-wrap">
         {filteredMovies.map((movie) => (
           <Col className="mb-4 mt-4" key={movie.id} md={3}>
-             <MovieCard movie={movie} favoriteMovies={favoriteMovieList} updateFavMovies={updateFavMovies} />
+             <MovieCard movie={movie} />
           </Col>
         ))}
       </div>
