@@ -1,11 +1,8 @@
 # MyFlix client side
 
 The client-side of the myFlix app is made with React. The server side portion of my project can be found at my [Github](https://github.com/campbellgarth/myFlix)
-## Parcel
 
-<<<<<<< Updated upstream
 
-=======
 ## Usage
 
 Users are able to do the following: 
@@ -65,4 +62,3 @@ On the client-side, I learned how to use React and React-Bootstrap. I learned ho
 [Heroku App](https://myflixmovies-72c1f6d2bace.herokuapp.com/documentation.html)
 
 [Netlify](https://myflixmovies-db.netlify.app/)
->>>>>>> Stashed changes
