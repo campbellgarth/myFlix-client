@@ -27545,7 +27545,6 @@ const MovieCard = ({ movie, updateAction })=>{
     const [isFavorite, setIsFavorite] = (0, _react.useState)(false);
     (0, _react.useEffect)(()=>{
         const user = JSON.parse(localStorage.getItem("user"));
-        console.log(user, "user");
         if (user && user.FavoriteMovie && user.FavoriteMovie.includes(movie.id)) setIsFavorite(true);
     }, [
         movie.id
@@ -27560,7 +27559,6 @@ const MovieCard = ({ movie, updateAction })=>{
                 Authorization: `Bearer ${token}`
             }
         }).then((response)=>response.json()).then((updatedUser)=>{
-            console.log("RESULT", updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setIsFavorite(true);
             alert("Movie added to your favorite list successfully!");
@@ -27590,7 +27588,7 @@ const MovieCard = ({ movie, updateAction })=>{
                 src: movie.imgURL
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 69,
+                lineNumber: 67,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
@@ -27602,19 +27600,19 @@ const MovieCard = ({ movie, updateAction })=>{
                             children: movie.Title
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 72,
+                            lineNumber: 70,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 71,
+                        lineNumber: 69,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
                         children: movie.Year
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 74,
+                        lineNumber: 72,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27625,7 +27623,7 @@ const MovieCard = ({ movie, updateAction })=>{
                             children: "Remove from Favorites"
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 77,
+                            lineNumber: 75,
                             columnNumber: 13
                         }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                             className: "btn back-button",
@@ -27633,24 +27631,24 @@ const MovieCard = ({ movie, updateAction })=>{
                             children: "Add to Favorites"
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 84,
+                            lineNumber: 82,
                             columnNumber: 13
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 75,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 70,
+                lineNumber: 68,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/movie-card/movie-card.jsx",
-        lineNumber: 68,
+        lineNumber: 66,
         columnNumber: 5
     }, undefined);
 };
@@ -42610,7 +42608,7 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
                             updateAction: ()=>updateFavMovies(movie.id)
                         }, void 0, false, {
                             fileName: "src/components/profile-view/favorite-movies.jsx",
-                            lineNumber: 20,
+                            lineNumber: 26,
                             columnNumber: 15
                         }, this)
                     }, movie.id, false, {
@@ -42787,11 +42785,11 @@ const SearchBar = ({ token })=>{
                         md: 3,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
                             movie: movie,
-                            setUser: ()=>{}
+                            updateAction: ()=>{}
                         }, void 0, false, {
                             fileName: "src/components/searchbar-view/searchbar-view.jsx",
                             lineNumber: 100,
-                            columnNumber: 14
+                            columnNumber: 13
                         }, undefined)
                     }, movie.id, false, {
                         fileName: "src/components/searchbar-view/searchbar-view.jsx",
