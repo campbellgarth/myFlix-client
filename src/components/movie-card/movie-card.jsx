@@ -3,12 +3,11 @@ import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export const MovieCard = ({ movie, setUser }) => {
+export const MovieCard = ({ movie, updateAction }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user, "user");
     if (user && user.FavoriteMovie && user.FavoriteMovie.includes(movie.id)) {
       setIsFavorite(true);
     }
@@ -30,7 +29,6 @@ export const MovieCard = ({ movie, setUser }) => {
     )
       .then((response) => response.json())
       .then((updatedUser) => {
-        console.log('RESULT', updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setIsFavorite(true);
         alert('Movie added to your favorite list successfully!');
@@ -54,12 +52,7 @@ export const MovieCard = ({ movie, setUser }) => {
     )
       .then((response) => response.json())
       .then((updatedUser) => {
-        const currentUser = localStorage.getItem('user');
-        const parsedUser = JSON.parse(currentUser);
-        removeFavoriteMovie(parsedUser, movieId);
-        localStorage.setItem('user', parsedUser);
-        setUser(parsedUser);
-        console.log('RESULT', updatedUser);
+        updateAction(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setIsFavorite(false);
         alert('Movie removed from your favorite list successfully!');
@@ -68,10 +61,6 @@ export const MovieCard = ({ movie, setUser }) => {
         console.error('Error removing favorite movies:', error)
       );
   };
-
-  function removeFavoriteMovie(user, id) {
-    user.FavoriteMovie = user.FavoriteMovie.filter(movieId => movieId !== id);
-  }
 
   return (
     <Card className="h-100">

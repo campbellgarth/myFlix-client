@@ -16,8 +16,17 @@ function FavoriteMovies({ favoriteMovieList, updateFavMovies }) {
           <p>No favorite movies saved yet!</p>
         ) : (
           favoriteMovieList.map((movie) => (
-            <Col xs={12} sm={6} lg={4} key={movie.id} className="movie-container">
-              <MovieCard movie={movie} />
+            <Col
+              xs={12}
+              sm={6}
+              lg={4}
+              key={movie.id}
+              className="movie-container"
+            >
+              <MovieCard
+                movie={movie}
+                updateAction={() => updateFavMovies(movie.id)}
+              />
             </Col>
           ))
         )}
