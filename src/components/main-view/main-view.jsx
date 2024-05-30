@@ -8,6 +8,7 @@ import { ProfileView } from '../profile-view/profile-view';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { SearchBar } from '../searchbar-view/searchbar-view';
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -41,7 +42,6 @@ export const MainView = () => {
   };
 
   useEffect(() => {
-    console.log(token, 'Token after login');
     if (token) {
       fetch('https://myflixmovies-72c1f6d2bace.herokuapp.com/movies', {
         headers: { Authorization: `Bearer ${token}` },
@@ -66,7 +66,7 @@ export const MainView = () => {
           setMovies(moviesFromApi);
         });
     }
-  }, [token]);
+  }, [token, user]);
 
   return (
     <BrowserRouter>
@@ -127,6 +127,20 @@ export const MainView = () => {
               </>
             }
           />
+          <Route
+            path="/search"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <Col md={8}>
+                    <SearchBar token={token} />
+                  </Col>
+                )}
+              </>
+            }
+          />
 
           <Route
             path="/movies/:movieId"
@@ -156,7 +170,7 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} />
+                        <MovieCard movie={movie} setUser={setUser} />
                       </Col>
                     ))}
                     <Col md={12}>

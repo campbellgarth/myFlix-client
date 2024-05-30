@@ -209,16 +209,13 @@ export const ProfileView = () => {
               </Card.Body>
             </Card>
           </Col>
-         
-            {favMovies && (
-              <div>
-                <FavoriteMovies
-                  favoriteMovieList={favMovies}
-                  updateFavMovies={updateFavMovies}
-                />
-              </div>
-            )}
-         
+
+          <Col xs={12}>
+            <FavoriteMovies
+              favoriteMovieList={favMovies}
+              updateFavMovies={updateFavMovies}
+            />
+          </Col>
         </Row>
       )}
       <button
